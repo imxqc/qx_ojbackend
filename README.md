@@ -1,26 +1,26 @@
 ## 登录页面
 
-![](images/2024/3/17/1710655232259.png)
+![图片](src/main/resources/META-INF/assets/login.png)
 
 ## 主页
 
-![](E:\code\oj\图片\homePage.png)
+![](src/main/resources/META-INF/assets/homePage.png)
 
 ## 创建题目
 
-![](E:\code\oj\图片\CreateQuestion1.png)
+![](src/main/resources/META-INF/assets/CreateQuestion1.png)
 
-![](E:\code\oj\图片\CreateQuestion2.png)
+![](src/main/resources/META-INF/assets/CreateQuestion2.png)
 
 ## 管理题目
 
-![](E:\code\oj\图片\ManageQuestion.png)
+![](src/main/resources/META-INF/assets/ManageQuestion.png)
 
 ## 做题页面
 
-![](E:\code\oj\图片\DoQuestion.png)
+![](src/main/resources/META-INF/assets/DoQuestion.png)
 
 ## 浏览题目提交信息
 
-![](E:\code\oj\图片\ScanQuestionSubmit.png)
+![](src/main/resources/META-INF/assets/ScanQuestionSubmit.png)
 
