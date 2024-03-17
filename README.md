@@ -4,7 +4,7 @@
 
 ## 主页
 
-![](src/main/resources/META-INF/assets/homePage.png)
+
 
 ## 创建题目
 
