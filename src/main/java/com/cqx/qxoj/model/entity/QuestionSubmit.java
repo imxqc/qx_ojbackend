@@ -15,9 +15,9 @@ import java.util.Date;
 @Data
 public class QuestionSubmit implements Serializable {
     /**
-     * id
+     * id 改为assignid 避免id过于规律
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**

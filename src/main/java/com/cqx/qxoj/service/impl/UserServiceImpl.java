@@ -1,8 +1,11 @@
 package com.cqx.qxoj.service.impl;
 
+import static com.cqx.qxoj.constant.RedisConstant.USER_PREFIX;
+import static com.cqx.qxoj.constant.UserConstant.DEFAULT_ROLE;
 import static com.cqx.qxoj.constant.UserConstant.USER_LOGIN_STATE;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqx.qxoj.common.ErrorCode;
@@ -16,22 +19,23 @@ import com.cqx.qxoj.model.vo.LoginUserVO;
 import com.cqx.qxoj.model.vo.UserVO;
 import com.cqx.qxoj.service.UserService;
 import com.cqx.qxoj.utils.SqlUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 /**
  * 用户服务实现
- *
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
  */
 @Service
 @Slf4j
@@ -41,6 +45,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * 盐值，混淆密码
      */
     public static final String SALT = "cqx";
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword) {
@@ -72,6 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             User user = new User();
             user.setUserAccount(userAccount);
             user.setUserPassword(encryptPassword);
+            user.setUserRole(DEFAULT_ROLE);
             boolean saveResult = this.save(user);
             if (!saveResult) {
                 throw new BusinessException(ErrorCode.SYSTEM_ERROR, "注册失败，数据库错误");
@@ -80,6 +88,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
     }
 
+    /**
+     * redis 减少了一次数据库访问
+     * @param userAccount  用户账户
+     * @param userPassword 用户密码
+     * @param request
+     * @return
+     */
     @Override
     public LoginUserVO userLogin(String userAccount, String userPassword, HttpServletRequest request) {
         // 1. 校验
@@ -95,6 +110,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 2. 加密
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
         // 查询用户是否存在
+        String key = USER_PREFIX + userAccount;
+        String str = stringRedisTemplate.opsForValue().get(key);
+
+        if (str != null) {
+            User user = JSONUtil.toBean(str, User.class);
+            return this.getLoginUserVO(user);
+        }
+
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userAccount", userAccount);
         queryWrapper.eq("userPassword", encryptPassword);

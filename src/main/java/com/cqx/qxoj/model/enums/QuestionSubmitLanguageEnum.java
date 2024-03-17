@@ -8,15 +8,12 @@ import java.util.stream.Collectors;
 
 /**
  * 提交语言类型枚举
- *
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
  */
 public enum QuestionSubmitLanguageEnum {
 
     JAVA("java", "java"),
     PYTHON("python", "python"),
-    GOLANG("golang", "golang");
+    GOLANG("go", "go");
 
     private final String text;
 

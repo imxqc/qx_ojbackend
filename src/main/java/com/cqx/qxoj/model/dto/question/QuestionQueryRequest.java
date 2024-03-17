@@ -8,10 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 查询请求
- *
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
+ * 查询问题请求
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

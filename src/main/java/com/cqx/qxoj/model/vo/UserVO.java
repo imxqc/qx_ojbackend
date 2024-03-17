@@ -2,13 +2,11 @@ package com.cqx.qxoj.model.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import lombok.Data;
 
 /**
  * 用户视图（脱敏）
- *
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
  */
 @Data
 public class UserVO implements Serializable {

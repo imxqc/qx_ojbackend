@@ -9,10 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 创建请求
- *
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
+ * 增加问题请求
  */
 @Data
 public class QuestionAddRequest implements Serializable {

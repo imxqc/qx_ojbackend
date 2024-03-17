@@ -3,14 +3,12 @@ package com.cqx.qxoj.model.dto.questionsubmit;
 import lombok.Data;
 
 /**
- * @author xqc
- * @version 1.0
- * @date 2024/3/7 0:02
+ * 题目提交程序执行信息
  */
 @Data
 public class JudgeInfo {
     /**
-     * 程序执行信息
+     * 程序执行信息 enum
      */
     private String message;
 

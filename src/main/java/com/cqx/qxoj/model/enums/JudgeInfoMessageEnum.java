@@ -2,7 +2,6 @@ package com.cqx.qxoj.model.enums;
 
 import com.sun.jna.Memory;
 import org.apache.commons.lang3.ObjectUtils;
-import sun.jvm.hotspot.opto.Compile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,9 +9,6 @@ import java.util.stream.Collectors;
 
 /**
  * 题目提交信息类型枚举
- *
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
  */
 public enum JudgeInfoMessageEnum {
 
@@ -27,10 +23,7 @@ public enum JudgeInfoMessageEnum {
     DANGEROUS_OPERATION("Dangerous Operation", "危险操作"),
     RUNTIME_ERROR("Runtime Error", "运行错误"),
     SYSTEM_ERROR("System Error", "系统错误");
-
-
     private final String text;
-
     private final String value;
 
     JudgeInfoMessageEnum(String text, String value) {

@@ -11,10 +11,8 @@ import com.cqx.qxoj.model.vo.QuestionVO;
 import javax.servlet.http.HttpServletRequest;
 
 /**
-* @author cqx
-* @description 针对表【question(题目)】的数据库操作Service
-* @createDate 2024-03-07 00:31:00
-*/
+ * @description 针对表【question(题目)】的数据库操作Service
+ */
 public interface QuestionService extends IService<Question> {
     /**
      * 校验
@@ -31,7 +29,6 @@ public interface QuestionService extends IService<Question> {
      * @return
      */
     QueryWrapper<Question> getQueryWrapper(QuestionQueryRequest questionQueryRequest);
-
 
 
     /**

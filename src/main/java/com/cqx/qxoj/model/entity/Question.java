@@ -8,15 +8,16 @@ import java.util.Date;
 
 /**
  * 题目
+ *
  * @TableName question
  */
-@TableName(value ="question")
+@TableName(value = "question")
 @Data
 public class Question implements Serializable {
     /**
-     * id
+     * id 改为assignid 避免id过于规律
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -35,7 +36,7 @@ public class Question implements Serializable {
     private String tags;
 
     /**
-     * 题目答案
+     * 题目代码答案
      */
     private String answer;
 

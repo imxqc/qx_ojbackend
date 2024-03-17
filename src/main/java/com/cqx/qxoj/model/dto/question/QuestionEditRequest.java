@@ -6,10 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 编辑请求
- *
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
+ * 编辑问题请求
  */
 @Data
 public class QuestionEditRequest implements Serializable {
@@ -50,7 +47,6 @@ public class QuestionEditRequest implements Serializable {
      * 判题配置（json 对象）
      */
     private JudgeConfig judgeConfig;
-
 
 
     private static final long serialVersionUID = 1L;

@@ -5,10 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 创建请求
- *
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
+ * 创建提交请求
  */
 @Data
 public class QuestionSubmitAddRequest implements Serializable {

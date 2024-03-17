@@ -8,16 +8,13 @@ import java.util.stream.Collectors;
 
 /**
  * 题目提交枚举
- *
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
  */
 public enum QuestionSubmitStatusEnum {
 
     WAITING("等待中", 0),
     RUNING("判题中", 1),
     SUCCEED("成功", 2),
-    FAILED("失败",3);
+    FAILED("失败", 3);
 
     private final String text;
 
@@ -43,7 +40,7 @@ public enum QuestionSubmitStatusEnum {
      * @param value
      * @return
      */
-    public static QuestionSubmitStatusEnum getEnumByValue(String value) {
+    public static QuestionSubmitStatusEnum getEnumByValue(Integer value) {
         if (ObjectUtils.isEmpty(value)) {
             return null;
         }

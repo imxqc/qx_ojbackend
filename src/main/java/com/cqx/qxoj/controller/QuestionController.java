@@ -1,5 +1,4 @@
 package com.cqx.qxoj.controller;
-
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cqx.qxoj.annotation.AuthCheck;
@@ -10,10 +9,7 @@ import com.cqx.qxoj.common.ResultUtils;
 import com.cqx.qxoj.constant.UserConstant;
 import com.cqx.qxoj.exception.BusinessException;
 import com.cqx.qxoj.exception.ThrowUtils;
-import com.cqx.qxoj.model.dto.question.QuestionAddRequest;
-import com.cqx.qxoj.model.dto.question.QuestionEditRequest;
-import com.cqx.qxoj.model.dto.question.QuestionQueryRequest;
-import com.cqx.qxoj.model.dto.question.QuestionUpdateRequest;
+import com.cqx.qxoj.model.dto.question.*;
 import com.cqx.qxoj.model.entity.Question;
 import com.cqx.qxoj.model.entity.User;
 import com.cqx.qxoj.model.vo.QuestionVO;
@@ -21,17 +17,16 @@ import com.cqx.qxoj.service.QuestionService;
 import com.cqx.qxoj.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static com.cqx.qxoj.constant.RedisConstant.QUESTION_PREFIX;
+
 /**
  * 题目接口
- *
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
  */
 @RestController
 @RequestMapping("/question")
@@ -43,6 +38,9 @@ public class QuestionController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     // region 增删改查
 
@@ -64,6 +62,16 @@ public class QuestionController {
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
         }
+        List<JudgeCase> judgeCase = questionAddRequest.getJudgeCase();
+        if (judgeCase != null) {
+            question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
+        }
+        JudgeConfig judgeConfig = questionAddRequest.getJudgeConfig();
+
+        if (judgeConfig != null) {
+            question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
+        }
+
         questionService.validQuestion(question, true);
         User loginUser = userService.getLoginUser(request);
         question.setUserId(loginUser.getId());
@@ -72,6 +80,10 @@ public class QuestionController {
         boolean result = questionService.save(question);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         long newQuestionId = question.getId();
+        String key = QUESTION_PREFIX + newQuestionId;
+//        stringRedisTemplate.opsForHash().put(key,);
+
+
         return ResultUtils.success(newQuestionId);
     }
 
@@ -118,6 +130,17 @@ public class QuestionController {
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
         }
+
+
+        List<JudgeCase> judgeCase = questionUpdateRequest.getJudgeCase();
+        if (judgeCase != null) {
+            question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
+        }
+        JudgeConfig judgeConfig = questionUpdateRequest.getJudgeConfig();
+
+        if (judgeConfig != null) {
+            question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
+        }
         // 参数校验
         questionService.validQuestion(question, false);
         long id = questionUpdateRequest.getId();
@@ -144,6 +167,28 @@ public class QuestionController {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         return ResultUtils.success(questionService.getQuestionVO(question, request));
+    }
+
+    /**
+     * 根据 id 获取 非脱敏信息
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/get")
+    public BaseResponse<Question> getQuestionById(long id, HttpServletRequest request) {
+        if (id <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Question question = questionService.getById(id);
+        if (question == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        User user = userService.getLoginUser(request);
+        if (user.getId().equals(question.getUserId()) && !userService.isAdmin(user)) {
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+        }
+        return ResultUtils.success(question);
     }
 
     /**
@@ -226,6 +271,17 @@ public class QuestionController {
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
         }
+
+        List<JudgeCase> judgeCase = questionEditRequest.getJudgeCase();
+        if (judgeCase != null) {
+            question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
+        }
+        JudgeConfig judgeConfig = questionEditRequest.getJudgeConfig();
+
+        if (judgeConfig != null) {
+            question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
+        }
+
         // 参数校验
         questionService.validQuestion(question, false);
         User loginUser = userService.getLoginUser(request);
@@ -240,5 +296,6 @@ public class QuestionController {
         boolean result = questionService.updateById(question);
         return ResultUtils.success(result);
     }
+
 
 }

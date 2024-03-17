@@ -4,9 +4,6 @@ import com.cqx.qxoj.common.ErrorCode;
 
 /**
  * 抛异常工具类
- *
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
  */
 public class ThrowUtils {
 

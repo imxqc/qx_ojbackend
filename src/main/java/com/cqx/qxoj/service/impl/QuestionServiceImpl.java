@@ -26,9 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author cqx
  * @description 针对表【question(题目)】的数据库操作Service实现
- * @createDate 2024-03-06 21:58:08
  */
 @Service
 public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>

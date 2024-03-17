@@ -3,9 +3,7 @@ package com.cqx.qxoj.model.dto.question;
 import lombok.Data;
 
 /**
- * @author xqc
- * @version 1.0
- * @date 2024/3/6 23:59
+ * 判题用例
  */
 @Data
 public class JudgeCase {

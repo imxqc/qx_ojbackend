@@ -1,14 +1,13 @@
 package com.cqx.qxoj.common;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
  * 通用返回类
  *
  * @param <T>
- * @author <a href="https://github.com/licqx">程序员鱼皮</a>
- * @from <a href="https://cqx.icu">编程导航知识星球</a>
  */
 @Data
 public class BaseResponse<T> implements Serializable {
