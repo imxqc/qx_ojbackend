@@ -56,7 +56,9 @@
 
 ### 做题页
 
-![](./images/Snipaste_2024-06-30_19-18-05.png)
+
+
+![](E:\code\oj\oj_backup\qx_oj\images\Snipaste_2024-07-06_20-22-51.png)
 
 
 
